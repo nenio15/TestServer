@@ -4,12 +4,11 @@ import bcrypt from 'bcrypt';
 import pool from '../config/db.js';
 
 dotenv.config();
-const app = express();
-app.use(express.json());
+const router = express.Router();
 
 import jwt from 'jsonwebtoken';
 
-app.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {

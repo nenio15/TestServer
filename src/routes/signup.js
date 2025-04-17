@@ -7,10 +7,11 @@ import pool from '../config/db.js';
 dotenv.config();
 
 const prisma = new PrismaClient();
-const app = express();
-app.use(express.json());
+const router = express.Router();
 
-app.post('/owner/signup', async (req, res) => {
+// 회원가입
+
+router.post('/signup', async (req, res) => {
   const { email, password, name, userType } = req.body;
 
   if (!email || !password || !name || !userType) {
@@ -37,4 +38,4 @@ app.post('/owner/signup', async (req, res) => {
   }
 });
 
-export default app;
+export default router;
