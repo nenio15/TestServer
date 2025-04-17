@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import bcrypt from 'bcrypt';
-import pool from '../config/db.js';
+import { pool } from '../config/db.js';
 
 const { PrismaClient } = await import('@prisma/client');
 dotenv.config();
