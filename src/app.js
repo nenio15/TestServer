@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import signupRouter from '.routes/signup.js'
-import loginRouter from '.routes/login.js'
+import signupRouter from './routes/signup.js'
+import loginRouter from './routes/login.js'
 
 dotenv.config();
 
