@@ -25,10 +25,11 @@ router.post('/signup', async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const date = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
   
-    const [result] = await pool.query(
-      'INSERT INTO User (email, password, name, userType, isApproved, createdAt)'
-      [email, hashedPassword, name, userType, true, date] //관리자 승인은 미구현.
-    )
+  // 관리자 승인 미구현
+  const [result] = await pool.query(
+      'INSERT INTO User (email, password, name, userType, isApproved, createdAt) VALUES (?, ?, ?, ?, ?, ?)',
+      [email, hashedPassword, name, userType, true, date] 
+  );
 
     return res.status(200).json({ message: '성공', userId: result.userId });
   } catch (err) {
