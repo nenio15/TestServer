@@ -6,10 +6,11 @@ import pool from '../config/db.js';
 
 dotenv.config();
 
-const router = express.Router();
 const prisma = new PrismaClient();
+const app = express();
+app.use(express.json());
 
-router.post('/owner/signup', async (req, res) => {
+app.post('/owner/signup', async (req, res) => {
   const { email, password, name, userType } = req.body;
 
   if (!email || !password || !name || !userType) {
@@ -37,8 +38,8 @@ router.post('/owner/signup', async (req, res) => {
 });
 
 //에러 페이지 로드 404
-router.get((req,res)=>{
+app.get((req,res)=>{
 	res.status(404).send('권한이 없습니다');
 });
 
-export default router;
+export default app;

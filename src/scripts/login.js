@@ -4,11 +4,12 @@ import bcrypt from 'bcrypt';
 import pool from '../config/db.js';
 
 dotenv.config();
-const router = express.Router();
+const app = express();
+app.use(express.json());
 
 import jwt from 'jsonwebtoken';
 
-router.post('/login', async (req, res) => {
+app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -35,6 +36,6 @@ router.post('/login', async (req, res) => {
 });
 
 //에러 페이지 로드 404
-router.post((req,res)=>{
+app.post((req,res)=>{
 	res.status(404).send('권한이 없습니다');
 });
