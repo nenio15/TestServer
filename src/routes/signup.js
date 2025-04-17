@@ -18,7 +18,7 @@ router.post('/signup', async (req, res) => {
     return res.status(400).json({ message: '필수 항목 누락' });
   }
 
-  const [exist] = await prisma.pool.query('SELECT * FROM User WHERE email = ?', email)
+  const [exist] = await prisma.pool.query('SELECT * FROM User WHERE email = ?', [email])
   if (exist.length > 0) {
     return res.status(400).json({ message: '이미 등록된 이메일입니다' });
   }
