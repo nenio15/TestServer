@@ -34,8 +34,3 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: '서버 오류' });
   }
 });
-
-//에러 페이지 로드 404
-app.post((req,res)=>{
-	res.status(404).send('권한이 없습니다');
-});

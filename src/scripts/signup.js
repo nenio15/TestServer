@@ -37,9 +37,4 @@ app.post('/owner/signup', async (req, res) => {
   }
 });
 
-//에러 페이지 로드 404
-app.get((req,res)=>{
-	res.status(404).send('권한이 없습니다');
-});
-
 export default app;
