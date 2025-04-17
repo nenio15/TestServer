@@ -1,7 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import signupRouter from './routes/signup.js'
-import loginRouter from './routes/login.js'
+import authRoutes from './routes/auth.js'
 
 dotenv.config();
 
@@ -12,7 +11,6 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Hello, MongoDB Backend!');
 });
-app.use('/auth', signupRouter);
-app.use('/auth', loginRouter);
+app.use('/auth', authRoutes);
 
 export default app;

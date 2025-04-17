@@ -1,14 +1,11 @@
  import dotenv from 'dotenv';
-import express from 'express';
 import bcrypt from 'bcrypt';
 import { pool } from '../config/db.js';
-
-dotenv.config();
-const router = express.Router();
-
 import jwt from 'jsonwebtoken';
 
-router.post('/login', async (req, res) => {
+dotenv.config();
+
+export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -32,6 +29,4 @@ router.post('/login', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: '서버 오류' });
   }
-});
-
-export default router;
+};

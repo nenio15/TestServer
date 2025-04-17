@@ -1,15 +1,12 @@
 import dotenv from 'dotenv';
-import express from 'express';
 import bcrypt from 'bcrypt';
 import { pool } from '../config/db.js';
 
 dotenv.config();
 
-const router = express.Router();
-
 // 회원가입
 
-router.post('/signup', async (req, res) => {
+export const signup = async (req, res) => {
   const { email, password, name, userType } = req.body;
 
   if (!email || !password || !name || !userType) {
@@ -36,6 +33,4 @@ router.post('/signup', async (req, res) => {
     console.error(err);
     return res.status(500).json({ message: '서버 에러' });
   }
-});
-
-export default router;
+};
