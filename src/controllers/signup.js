@@ -31,10 +31,11 @@ export const signup = async (req, res) => {
         [email, hashedPassword, name, userType, true, date]
     );
 
+    const [ids] = await pool.query('SELECT id FROM User WHERE email = ?', [email]);
+    const userId = ids[0];
+
     //소상공인, 택배기사 정보 기입
     if(userType == "OWNER"){
-      //User와 Store연동
-      const [userId] = await pool.query('SELECT id FROM User WHERE email = ?', [email]);
       //미기입 기본 설정
       const expectedSize = "소형";
       const monthlyCount = 0;
@@ -51,7 +52,6 @@ export const signup = async (req, res) => {
       );
 
     }else if(userType == "DRIVER"){
-      const userId = await pool.query('SELECT id FROM User WHERE email = ?', [email]);
       //화물 운송 자격증 파일, 운전 경력 증명서 파일
       /*
       const [result] = await pool.query(
