@@ -14,6 +14,15 @@ export const signup = async (req, res) => {
   if (!email || !password || !name || !userType) {
     return res.status(400).json({ message: '필수 항목 누락' });
   }
+  if(userType == "OWNER"){
+    if (!address || !detailAddress || !latitude || !longitude) {
+      return res.status(400).json({ message: '필수 항목 누락' });
+    }
+  }else if(userType == "DRIVER"){
+    if (!phoneNumber || !vehicleNumber || !regionCity || !regionDistrict) {
+      return res.status(400).json({ message: '필수 항목 누락' });
+    }
+  }
 
   try{
 
@@ -32,7 +41,7 @@ export const signup = async (req, res) => {
     );
 
     //const [ids] = await pool.query('SELECT id FROM User WHERE email = ?', [email]);
-    const userId = exist.id;
+    const userId = result.id;
 
     //소상공인, 택배기사 정보 기입
     if(userType == "OWNER"){
@@ -72,7 +81,7 @@ export const signup = async (req, res) => {
 
     }
 
-    return res.status(200).json({ success: true, message: '성공', userId: result.userId });
+    return res.status(200).json({ success: true, message: '성공', userId: result.id });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: '서버 에러' });
