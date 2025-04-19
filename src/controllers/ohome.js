@@ -41,7 +41,7 @@ export const getOwnerHome = async (req, res) => {
     //const store = stores[0];
 
     return res.status(200).json({ status: true, data: { store: store, assignedDriver: 'none',
-      pickupDate: '', points: [point], subscriptionName: cur_plan} });
+      pickupDate: '', points: point.amount, subscriptionName: cur_plan} });
   } catch (err) {
     console.error(err);
     return res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
