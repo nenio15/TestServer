@@ -6,29 +6,14 @@ import { pool } from '../config/db.js';
 
 // 소상공인 홈화면
 export const getOwnerHome = async (req, res) => {
-
-  /*
-  const authHeader = req.headers.authorization;
-
-  // 헤더 체크
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: '인증 토큰이 없습니다.' });
-  }
-
-  const token = authHeader.split(' ')[1];
-  */
-
   //test용 direction.
-  const { email } = req.body;
+  //const { email } = req.body;
+  const { userId } = req.body;
 
   try {
     //test
-    const [ids] = await pool.query('SELECT * FROM User WHERE email = ?', [email]);
-    const userId = ids[0].id;
-
-    // JWT 디코딩
-    //const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    //const userId = decoded.userId;
+    //const [ids] = await pool.query('SELECT * FROM User WHERE email = ?', [email]);
+    //const userId = ids[0].id;
 
     //기본 인출 정보
     const [point] = await pool.query('SELECT amount FROM PointTransaction WHERE userId = ?', [userId]);
@@ -44,6 +29,6 @@ export const getOwnerHome = async (req, res) => {
       pickupDate: '', points: point[0].amount, subscriptionName: cur_plan} });
   } catch (err) {
     console.error(err);
-    return res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+    return res.status(401).json({ message: '유효하지 않습니다.' });
   }
 };
