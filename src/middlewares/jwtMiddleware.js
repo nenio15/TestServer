@@ -4,7 +4,9 @@ import jwt from 'jsonwebtoken';
 import { pool } from '../config/db.js';
 
 export const jwtMiddleware = async (req, res, next) => {
-    const authHeader = req.headers['Authorization']; // Authorization 헤더 추출
+    const authHeader = req.headers.authorization; // Authorization 헤더 추출
+    console.log('Authorization Header:', authHeader);
+
     try {
         if (!authHeader) return res.status(401).json({ message: '토큰이 존재하지 않습니다.' });
 
