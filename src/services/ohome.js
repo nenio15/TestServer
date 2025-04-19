@@ -8,12 +8,13 @@ import { pool } from '../config/db.js';
 export const getOwnerHome = async (req, res) => {
   //test용 direction.
   //const { email } = req.body;
-  const { userId } = req.body;
+  //const { userId } = req.body;
 
   try {
     //test
     //const [ids] = await pool.query('SELECT * FROM User WHERE email = ?', [email]);
     //const userId = ids[0].id;
+    const userId = req.userId;
 
     //기본 인출 정보
     const [point] = await pool.query('SELECT amount FROM PointTransaction WHERE userId = ?', [userId]);
