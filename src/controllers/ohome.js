@@ -31,11 +31,12 @@ export const getOwnerHome = async (req, res) => {
     //const userId = decoded.userId;
 
     //기본 인출 정보
-    const [point] = await pool.query('SELECT amount FROM PointTransaction WHERE id = ?', [userId]);
-    const [plan] = await pool.query('SELECT name FROM SubscriptionPlan WHERE id = ?', [userId]);
-    const cur_plan = (plan.length !== 0 ? plan[0] : '미구독');
-    //const [driver] = await pool.query('SELECT SubstriptionPlan FROM DriverInfo WHERE id = ?', [userId]);
-    const [store] = await pool.query('SELECT address, latitude, longitude FROM StoreInfo WHERE id = ?', [userId]);
+    const [point] = await pool.query('SELECT amount FROM PointTransaction WHERE userId = ?', [userId]);
+    const [plan] = await pool.query(`SELECT sp.name, sp.price FROM User u 
+        JOIN SubscriptionPlan sp ON u.subscriptionPlanId = sp.id WHERE u.id = ?`, [userId] );
+    const cur_plan = (plan.length !== 0 ? plan[0].name : '미구독');
+    //const [driver] = await pool.query('SELECT SubstriptionPlan FROM DriverInfo WHERE userId = ?', [userId]);
+    const [store] = await pool.query('SELECT address, latitude, longitude FROM StoreInfo WHERE userId = ?', [userId]);
 
     //const store = stores[0];
 
