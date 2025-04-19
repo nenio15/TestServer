@@ -3,7 +3,7 @@ dotenv.config();
 import jwt from 'jsonwebtoken';
 import { pool } from '../config/db.js';
 
-export default async function (req, res, next) {
+export const jwtMiddleware = async (req, res, next) => {
     const authorization = req.headers.get('Authorization');
     try {
         if (!authorization) return res.status(401).json({ message: '토큰이 존재하지 않습니다.' });
