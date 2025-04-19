@@ -40,7 +40,7 @@ export const getOwnerHome = async (req, res) => {
 
     //const store = stores[0];
 
-    return res.status(200).json({ status: true, data: { store: store, assignedDriver: 'none',
+    return res.status(200).json({ status: true, data: { store: store[0], assignedDriver: 'none',
       pickupDate: '', points: point[0].amount, subscriptionName: cur_plan} });
   } catch (err) {
     console.error(err);
