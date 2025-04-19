@@ -4,7 +4,7 @@ import {getOwnerHome} from "../services/ownerhomeService.js";
 
 export const getHomeInfo = async (req, res, next) => {
   try {
-    const homeInfo = await getOwnerHome(req.user);
+    const homeInfo = await getOwnerHome(req);
     res.status(200).json({ homeInfo });
   } catch (err) {
     console.error(err);
