@@ -40,8 +40,8 @@ export const signup = async (req, res) => {
         [email, hashedPassword, name, userType, true, date]
     );
 
-    //const [ids] = await pool.query('SELECT id FROM User WHERE email = ?', [email]);
-    const userId = result.id;
+    const [ids] = await pool.query('SELECT * FROM User WHERE email = ?', [email]);
+    const userId = ids[0].id;
 
     //소상공인, 택배기사 정보 기입
     if(userType == "OWNER"){
