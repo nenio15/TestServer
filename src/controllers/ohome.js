@@ -6,6 +6,8 @@ import { pool } from '../config/db.js';
 
 // 소상공인 홈화면
 export const getOwnerHome = async (req, res) => {
+
+  /*
   const authHeader = req.headers.authorization;
 
   // 헤더 체크
@@ -14,22 +16,27 @@ export const getOwnerHome = async (req, res) => {
   }
 
   const token = authHeader.split(' ')[1];
+  */
+
+  //test용 direction.
+  const { email } = req.body;
 
   try {
+    //test
+    const [ids] = await pool.query('SELECT * FROM User WHERE email = ?', [email]);
+    const userId = ids[0].id;
+
     // JWT 디코딩
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.userId;
+    //const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    //const userId = decoded.userId;
 
     //기본 인출 정보
-    const [point] = await pool.query('SELECT points FROM User WHERE id = ?', [userId]);
+    const [point] = await pool.query('SELECT amount FROM PointTransaction WHERE id = ?', [userId]);
     const [plan] = await pool.query('SELECT name FROM SubscriptionPlan WHERE id = ?', [userId]);
     const cur_plan = (plan.length !== 0 ? plan[0] : '미구독');
     //const [driver] = await pool.query('SELECT SubstriptionPlan FROM DriverInfo WHERE id = ?', [userId]);
-    const [store] = await pool.query('SELECT adrress, latitude, longitude FROM StoreInfo WHERE id = ?', [userId]);
+    const [store] = await pool.query('SELECT address, latitude, longitude FROM StoreInfo WHERE id = ?', [userId]);
 
-    if (users.length === 0) {
-      return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
-    }
     //const store = stores[0];
 
     return res.status(200).json({ status: true, data: { store: store, assignedDriver: 'none',
