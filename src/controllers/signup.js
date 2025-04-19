@@ -34,7 +34,7 @@ export const signup = async (req, res) => {
     //소상공인, 택배기사 정보 기입
     if(userType == "OWNER"){
       //User와 Store연동
-      const userId = await pool.query('SELECT id FROM User WHERE email = ?', [email]);
+      const [userId] = await pool.query('SELECT id FROM User WHERE email = ?', [email]);
       //미기입 기본 설정
       const expectedSize = "소형";
       const monthlyCount = 0;
@@ -44,10 +44,10 @@ export const signup = async (req, res) => {
 
       // StoreInfo 등록
       await pool.query(
-          `INSERT INTO StoreInfo
-           (userId, address, detailAddress, expectedSize, monthlyCount, latitude, longitude, pickupPreference)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-          [userId, address, detailAddress, expectedSize, monthlyCount, latitude, longitude, pickupPreference]
+          `INSERT INTO StoreInfo 
+            (userId, address, detailAddress, expectedSize, monthlyCount, latitude, longitude, pickupPreference)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [userId, address, detailAddress, expectedSize, monthlyCount, latitude, longitude, pickupPreference]
       );
 
     }else if(userType == "DRIVER"){
