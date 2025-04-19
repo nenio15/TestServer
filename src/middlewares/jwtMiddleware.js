@@ -4,13 +4,13 @@ import jwt from 'jsonwebtoken';
 import { pool } from '../config/db.js';
 
 export const jwtMiddleware = async (req, res, next) => {
-    const authorization = req.get('Authorization');
+    const authHeader = req.headers['authorization']; // Authorization 헤더 추출
     try {
-        if (!authorization) return res.status(401).json({ message: '토큰이 존재하지 않습니다.' });
+        if (!authHeader) return res.status(401).json({ message: '토큰이 존재하지 않습니다.' });
 
-        const [tokenType, token] = authorization.split(' ');
+        const token = authHeader && authHeader.split(' ')[1]; // 'Bearer xxx'에서 토큰만 추출
 
-        if (tokenType !== 'Bearer') return res.status(401).json({ message: '토큰 타입이 일치하지 않습니다.'});
+        //if (tokenType !== 'Bearer') return res.status(401).json({ message: '토큰 타입이 일치하지 않습니다.'});
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -25,7 +25,6 @@ export const jwtMiddleware = async (req, res, next) => {
         */
         // req.userid에 사용자 정보를 저장합니다.
         req.userId = decodedToken.userId;
-
         next();
     } catch (error) {
         res.clearCookie('authorization');
