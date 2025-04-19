@@ -1,9 +1,7 @@
-import Owner from "../models/ownerhome.js";
 
 // 홈
 export const getHomeInfo = async (req, res, next) => {
   try {
-    Owner.getUserInfo(req, res);
     res.status(200).json({ message: '홈 화면 정보 반환' });
   } catch (err) {
     console.error(err);

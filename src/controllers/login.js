@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 
 
 export const login = async (req, res) => {
-  const { email, password, usertype } = req.body;
+  const { email, password, userType } = req.body;
 
   try {
     const [users] = await pool.query('SELECT * FROM User WHERE email = ?', [email]);
@@ -21,8 +21,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: '이메일 또는 비밀번호가 잘못되었습니다.' });
     }
 
-    const isOwner = await bcrypt.compare(usertype, user.userType);
-    if (!isOwner) {
+    if (user.userType !== userType) {
       return res.status(401).json({ message: '소상공인 또는 택배기사 설정이 잘못되었습니다.'});
     }
 

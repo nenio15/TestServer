@@ -8,7 +8,7 @@ import { pool } from '../config/db.js';
 
 export const signup = async (req, res) => {
   const { email, password, name, userType,
-    address, detailAddress,
+    address, detailAddress, latitude, longitude,
     phoneNumber, vehicleNumber , regionCity, regionDistrict } = req.body;
 
   if (!email || !password || !name || !userType) {
