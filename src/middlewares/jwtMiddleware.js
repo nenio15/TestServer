@@ -4,9 +4,7 @@ import jwt from 'jsonwebtoken';
 import { pool } from '../config/db.js';
 
 export const jwtMiddleware = async (req, res, next) => {
-    const authHeader = req.headers.authorization; // Authorization 헤더 추출
-    console.log('Authorization Header:', authHeader);
-
+    const authHeader = req.headers['authorization']; // Authorization 헤더 추출
     try {
         if (!authHeader) return res.status(401).json({ message: '토큰이 존재하지 않습니다.' });
 
@@ -29,7 +27,7 @@ export const jwtMiddleware = async (req, res, next) => {
         req.userId = decodedToken.userId;
         next();
     } catch (error) {
-        res.clearCookie('Authorization');
+        res.clearCookie('authorization');
 
         // 토큰이 만료되었거나, 조작되었을 때, 에러 메시지를 다르게 출력합니다.
         switch (error.name) {
