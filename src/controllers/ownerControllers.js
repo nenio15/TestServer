@@ -43,7 +43,7 @@ export const getShipmentDetail = async (req, res, next) => {
 
 export const registerShipment = async (req, res, next) => {
   try {
-    const shipmentInfo = await postShipment(req.body);
+    const shipmentInfo = await postShipment(req);
     res.status(200).json(shipmentInfo);
   } catch (err) {
     console.error(err);
