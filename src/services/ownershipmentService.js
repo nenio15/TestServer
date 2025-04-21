@@ -23,7 +23,6 @@ export const postShipment = async (req, res) => {
         [userId, productName, size, caution, recipientName, recipientPhone, recipientAddr, detailAddress, pickupDate]
     );
 
-
     //포인트 양식
     const spoints = s2point(size);
     const type = 'USE';
@@ -38,7 +37,7 @@ export const postShipment = async (req, res) => {
     );
 
     //json 양식
-    return { status: true, message: '배송 정보가 등록되었습니다.', parcelId: result[0].id, usedPoints: spoints  };
+    return { status: true, message: '배송 정보가 등록되었습니다.', parcelId: result.insertId, usedPoints: spoints  };
   } catch (err) {
     console.error(err);
     throw new Error('유효하지 않습니다.'); //오류 분류 추후 수정
