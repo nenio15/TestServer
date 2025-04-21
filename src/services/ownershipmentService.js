@@ -19,9 +19,7 @@ export const postShipment = async (req, res) => {
 
     //parcel 단건 배송정보 입력
     const [result] = await pool.query(
-        'INSERT INTO Parcel ( ownerid, productName, size, caution,
-        recipientname, recipientPhone, recipientAddr, detailAddress, pickupDate)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        'INSERT INTO Parcel ( ownerid, productName, size, caution, recipientname, recipientPhone, recipientAddr, detailAddress, pickupDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [userId, productName, size, caution, recipientName, recipientPhone, recipientAddr, detailAddress, pickupDate]
     );
 
