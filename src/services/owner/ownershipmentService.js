@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { pool } from '../config/db.js';
-import {s2point} from "../config/sizeToPoint.js";
+import { pool } from '../../config/db.js';
+import {s2point} from "../../config/sizeToPoint.js";
 
 // 단건 배송 화면
 export const postShipment = async (req, res) => {

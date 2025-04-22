@@ -1,11 +1,12 @@
 
 // 홈
-import {getOwnerHome} from "../services/ownerhomeService.js";
-import {postShipment} from "../services/ownershipmentService.js";
+import {getOwnerHome} from "../services/owner/ownerhomeService.js";
+import {postShipment} from "../services/owner/ownershipmentService.js";
+import {viewShipmentList} from "../services/owner/listshipmentService.js";
 
 export const getHomeInfo = async (req, res, next) => {
   try {
-    const homeInfo = await getOwnerHome(req);
+    const homeInfo = await getOwnerHome(req, res);
     res.status(200).json( homeInfo );
   } catch (err) {
     console.error(err);
@@ -25,7 +26,8 @@ export const getCompletedShipments = async (req, res, next) => {
 
 export const getShipmentList = async (req, res, next) => {
   try {
-    res.status(200).json({ message: '전체 발송 내역 반환' });
+    const list = await viewShipmentList(req, res);
+    res.status(200).json(list);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: '서버 오류 발생' });
