@@ -64,13 +64,13 @@ export const getShipmentDetailView = async (req) => {
   try {
     const track = req.query.track;
     //trackingCode 기준 배송리스트 조회
-    const result = await pool.query(
+    const [result] = await pool.query(
         'SELECT * FROM Parcel WHERE trackingCode = ?',
         [track]
     );
 
     //json 양식
-    return { status: true, data: result };
+    return { status: true, data: result[0] };
   } catch (err) {
     console.error(err);
     throw new Error('유효하지 않습니다.'); //오류 분류 추후 수정
