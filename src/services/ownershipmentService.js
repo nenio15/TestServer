@@ -6,11 +6,11 @@ import {s2point} from "../config/sizeToPoint.js";
 // get 배송 전체 내역
 export const getShipmentListView = async (req) => {
   //기본 금일 날짜
-  const [year, month, day] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
+  const [syear, smonth, sday] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
   try {
-    const year = req.query.year || year;
-    const month = req.query.month || month;
-    const day = req.query.day || day;
+    const year = req.query.year || syear;
+    const month = req.query.month || smonth;
+    const day = req.query.day || sday;
     const userId = req.userId;
 
     //ex)2025-04-21  day까지만 확인
@@ -34,11 +34,11 @@ export const getShipmentListView = async (req) => {
 // get 배송 완료 내역
 export const getShipmentCompleteView = async (req) => {
   //기본 금일 날짜
-  const [year, month, day] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
+  const [syear, smonth, sday] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
   try {
-    const year = req.query.year || year;
-    const month = req.query.month || month;
-    //const day = req.query.day || day;
+    const year = req.query.year || syear;
+    const month = req.query.month || smonth;
+    //const day = req.query.day || sday;
     const userId = req.userId;
 
     //ex)2025-04-00  month까지 확인
