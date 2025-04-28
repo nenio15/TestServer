@@ -1,10 +1,7 @@
 
 // 홈
 import {getOwnerHome} from "../services/owner/ownerhomeService.js";
-import {postShipment} from "../services/owner/ownershipmentService.js";
-import {getShipmentListView} from "../services/owner/listshipmentService.js";
-import {getShipmentCompleteView} from "../services/owner/completeshipmentService.js";
-import {getShipmentDetailView} from "../services/owner/viewshipmentdetailService.js";
+import {postShipment, getShipmentListView, getShipmentDetailView, getShipmentCompleteView} from "../services/owner/ownershipmentService.js";
 
 export const getHomeInfo = async (req, res, next) => {
   try {
