@@ -70,7 +70,7 @@ export const getShipmentDetailView = async (req) => {
     );
 
     //json 양식
-    return { status: true, data: result[0] };
+    return { status: true, data: result[0] || {} };
   } catch (err) {
     console.error(err);
     throw new Error('유효하지 않습니다.'); //오류 분류 추후 수정
