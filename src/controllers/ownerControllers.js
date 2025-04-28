@@ -2,7 +2,9 @@
 // 홈
 import {getOwnerHome} from "../services/owner/ownerhomeService.js";
 import {postShipment} from "../services/owner/ownershipmentService.js";
-import {viewShipmentList} from "../services/owner/listshipmentService.js";
+import {getShipmentListView} from "../services/owner/listshipmentService.js";
+import {getShipmentCompleteView} from "../services/owner/completeshipmentService.js";
+import {getShipmentDetailView} from "../services/owner/viewshipmentdetailService.js";
 
 export const getHomeInfo = async (req, res, next) => {
   try {
@@ -17,7 +19,8 @@ export const getHomeInfo = async (req, res, next) => {
 // 발송
 export const getCompletedShipments = async (req, res, next) => {
   try {
-    res.status(200).json({ message: '배송 완료된 발송 내역 반환' });
+    const completed = await getShipmentCompleteView(req, res);
+    res.status(200).json(completed);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: '서버 오류 발생' });
@@ -26,7 +29,7 @@ export const getCompletedShipments = async (req, res, next) => {
 
 export const getShipmentList = async (req, res, next) => {
   try {
-    const list = await viewShipmentList(req, res);
+    const list = await getShipmentListView(req, res);
     res.status(200).json(list);
   } catch (err) {
     console.error(err);
@@ -36,7 +39,8 @@ export const getShipmentList = async (req, res, next) => {
 
 export const getShipmentDetail = async (req, res, next) => {
   try {
-    res.status(200).json({ message: '단건 발송 조회 (보류 상태)' });
+    const detail = await getShipmentDetailView(req, res);
+    res.status(200).json(detail);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: '서버 오류 발생' });
