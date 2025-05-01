@@ -107,3 +107,13 @@ export const changePassword = async (req, res, next) => {
     res.status(500).json({ message: '서버 오류 발생' });
   }
 };
+
+export const postChatAi = async (req, res, next) => {
+  try {
+    const result = await postChatAi(req);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: '서버 오류 발생' });
+  }
+};

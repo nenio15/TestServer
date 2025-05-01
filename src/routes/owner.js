@@ -1,6 +1,6 @@
 import express from 'express';
-import { getHomeInfo, getCompletedShipments, getShipmentList, getShipmentDetail, registerShipment, 
-         subscribePlan, chargePoints, getPointHistory, updateStoreInfo, changePassword } from '../controllers/ownerControllers.js';
+import { getHomeInfo, getCompletedShipments, getShipmentList, getShipmentDetail, registerShipment,
+    subscribePlan, chargePoints, getPointHistory, updateStoreInfo, changePassword, postChatAi } from '../controllers/ownerControllers.js';
 import { jwtMiddleware } from '../middlewares/jwtMiddleware.js';  // 필요 시 추가
 
 const router = express.Router();
@@ -24,5 +24,8 @@ router.get('/points/history', jwtMiddleware, getPointHistory); // (보류 상태
 // 마이페이지
 router.post('/my-page', updateStoreInfo); // 가게 정보 수정하기
 router.post('/my-page/change-password', changePassword); // 비밀번호 수정하기
+
+// 챗봇
+router.post('/ai/chat', postChatAi); // 챗봇 대화 일부
 
 export default router;
