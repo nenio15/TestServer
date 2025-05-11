@@ -16,9 +16,9 @@ export const getShipmentListView = async (req) => {
     //ex)2025-04-21  day까지만 확인
     const time = year + '-' + month + '-' + day;
 
-    //날짜기준 배송리스트 조회
+    //날짜기준 배송리스트 조회 pickupCompletedAt / pickupDate / createdAt - 어느것? 일단 희망날짜 기준으로 소요.
     const [result] = await pool.query(
-        'SELECT trackingCode, status FROM Parcel WHERE ownerId = ? AND DATE(createdAt) = ?',
+        'SELECT trackingCode, status FROM Parcel WHERE ownerId = ? AND DATE(pickupDate) = ?',
         [userId, time]
     );
 
@@ -46,7 +46,7 @@ export const getShipmentCompleteView = async (req) => {
 
     //날짜기준 배송리스트 조회 ( 월간 확인 )
     const [result] = await pool.query(
-        "SELECT trackingCode, recipientName, recipientAddr, productName, status, completedAt FROM Parcel WHERE ownerId = ? AND DATE_FORMAT(completedAt, '%Y-%m') = ?",
+        "SELECT trackingCode, recipientName, recipientAddr, productName, status, deliveryCompletedAt FROM Parcel WHERE ownerId = ? AND DATE_FORMAT(deliveryCompletedAt, '%Y-%m') = ?",
         [userId, time]
     );
 
