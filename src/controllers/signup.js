@@ -14,11 +14,11 @@ export const signup = async (req, res) => {
   }
   if(userType == "OWNER"){
     if (!address || !detailAddress || !latitude || !longitude) {
-      return res.status(400).json({ message: '소상공인 필수 항목 누락' });
+      return res.status(400).json({ message: '필수 항목 누락' });
     }
   }else if(userType == "DRIVER"){
     if (!phoneNumber || !vehicleNumber || !regionCity || !regionDistrict) {
-      return res.status(400).json({ message: '배송기사 필수 항목 누락' });
+      return res.status(400).json({ message: '필수 항목 누락' });
     }
   }
 

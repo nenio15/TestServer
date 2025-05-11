@@ -1,9 +1,9 @@
+import { getOwnerHome } from "../services/owner/ownerhomeService.js";
+import { postShipment, getShipmentListView, getShipmentDetailView, getShipmentCompleteView } from "../services/owner/ownershipmentService.js";
+import { subscribeOwnerPlan, chargeOwnerPoints, getOwnerPointHistory  } from "../services/owner/ownerPointService.js";
+import { updateOwnerStoreInfo, changeOwnerPassword } from "../services/owner/ownerMypageService.js";
 
 // 홈
-import { getOwnerHome } from "../services/ownerhomeService.js";
-import {postShipment, getShipmentListView, getShipmentDetailView, getShipmentCompleteView} from "../services/ownershipmentService.js";
-import { subscribeOwnerPlan, chargeOwnerPoints, getOwnerPointHistory  } from "../services/ownerPointService.js";
-
 export const getHomeInfo = async (req, res, next) => {
   try {
     const homeInfo = await getOwnerHome(req, res);
@@ -89,31 +89,25 @@ export const getPointHistory = async (req, res, next) => {
   }
 };
 
-// 마이페이지
+// 마이페이지 - 가게 주소 수정
 export const updateStoreInfo = async (req, res, next) => {
   try {
-    res.status(200).json({ message: '가게 정보 수정 완료' });
+    const result = await updateOwnerStoreInfo(req);
+    res.status(200).json(result);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: '서버 오류 발생' });
+    const statusCode = err.status || 500;
+    res.status(statusCode).json({ message: err.message || '서버 오류 발생' });
   }
 };
 
 export const changePassword = async (req, res, next) => {
   try {
-    res.status(200).json({ message: '비밀번호 변경 완료' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: '서버 오류 발생' });
-  }
-};
-
-export const postChatAi = async (req, res, next) => {
-  try {
-    const result = await postChatAi(req);
+    const result = await changeOwnerPassword(req);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: '서버 오류 발생' });
+    const statusCode = err.status || 500;
+    res.status(statusCode).json({ message: err.message || '서버 오류 발생' });
   }
 };
