@@ -9,12 +9,12 @@ export const getShipmentListView = async (req) => {
   const [syear, smonth, sday] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
   try {
     const year = req.query.year || syear;
-    const month = pad(req.query.month || smonth);
-    const day = pad(req.query.day || sday);
+    const month = req.query.month || smonth;
+    const day = req.query.day || sday;
     const userId = req.userId;
 
     //ex)2025-04-21  day까지만 확인
-    const time = year + '-' + month + '-' + day;
+    const time = year + '-' + pad(month) + '-' + pad(day);
 
     //날짜기준 배송리스트 조회 pickupCompletedAt / pickupDate / createdAt - 어느것? 일단 희망날짜 기준으로 소요.
     const [result] = await pool.query(
@@ -38,12 +38,12 @@ export const getShipmentCompleteView = async (req) => {
   const [syear, smonth, sday] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
   try {
     const year = req.query.year || syear;
-    const month = pad(req.query.month || smonth);
+    const month = req.query.month || smonth;
     //const day = req.query.day || sday;
     const userId = req.userId;
 
     //ex)2025-04-00  month까지 확인
-    const time = year + '-' + month;// + '-' + day;
+    const time = year + '-' + pad(month);// + '-' + day;
 
     //날짜기준 배송리스트 조회 ( 월간 확인 )
     const [result] = await pool.query(
