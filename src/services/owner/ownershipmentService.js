@@ -9,8 +9,8 @@ export const getShipmentListView = async (req) => {
   const [syear, smonth, sday] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
   try {
     const year = req.query.year || syear;
-    const month = req.query.month || smonth;
-    const day = req.query.day || sday;
+    const month = pad(req.query.month || smonth);
+    const day = pad(req.query.day || sday);
     const userId = req.userId;
 
     //ex)2025-04-21  day까지만 확인
@@ -38,7 +38,7 @@ export const getShipmentCompleteView = async (req) => {
   const [syear, smonth, sday] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
   try {
     const year = req.query.year || syear;
-    const month = req.query.month || smonth;
+    const month = pad(req.query.month || smonth);
     //const day = req.query.day || sday;
     const userId = req.userId;
 
