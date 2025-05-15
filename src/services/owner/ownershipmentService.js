@@ -32,6 +32,7 @@ export const getShipmentListView = async (req) => {
 
 
 // get 배송 완료 내역
+/// !!! 배송 기준이 완료 시점이 아닌, pickupdate 기준임. 제 역할 못하는 테스팅용으로 변질됨.
 export const getShipmentCompleteView = async (req) => {
   //기본 금일 날짜
   const [syear, smonth, sday] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
@@ -46,7 +47,7 @@ export const getShipmentCompleteView = async (req) => {
 
     //날짜기준 배송리스트 조회 ( 월간 확인 )
     const [result] = await pool.query(
-        "SELECT trackingCode, recipientName, recipientAddr, productName, status, deliveryCompletedAt FROM Parcel WHERE ownerId = ? AND DATE_FORMAT(deliveryCompletedAt, '%Y-%m') = ?",
+        "SELECT trackingCode, recipientName, recipientAddr, productName, status, deliveryCompletedAt FROM Parcel WHERE ownerId = ? AND DATE_FORMAT(pickupDate, '%Y-%m') = ?",
         [userId, time]
     );
 
