@@ -4,7 +4,7 @@ import { pool } from '../../config/db.js';
 import {s2point} from "../../config/sizeToPoint.js";
 import {pad} from "../../config/pad.js";
 
-// get 배송 전체 내역
+// get 배송 당일 내역
 export const getShipmentListView = async (req) => {
   //기본 금일 날짜
   const [syear, smonth, sday] = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0].split('-');
@@ -19,7 +19,7 @@ export const getShipmentListView = async (req) => {
 
     //날짜기준 배송리스트 조회 pickupCompletedAt / pickupDate / createdAt - 어느것? 일단 희망날짜 기준으로 소요.
     const [result] = await pool.query(
-        'SELECT trackingCode, status FROM Parcel WHERE ownerId = ? AND DATE(pickupScheduledDate) = ?',
+        'SELECT trackingCode, recipientName, recipientAddr, detailAddress, productName, status, deliveryCompletedAt, pickupScheduledDate, size FROM Parcel WHERE ownerId = ? AND DATE(pickupScheduledDate) = ?',
         [userId, time]
     );
 
@@ -48,7 +48,7 @@ export const getShipmentCompleteView = async (req) => {
 
     //날짜기준 배송리스트 조회 ( 월간 확인 )
     const [result] = await pool.query(
-        "SELECT trackingCode, recipientName, recipientAddr, productName, status, deliveryCompletedAt, pickupScheduledDate, size FROM Parcel WHERE ownerId = ? AND DATE_FORMAT(pickupScheduledDate, '%Y-%m') = ?",
+        "SELECT trackingCode, recipientName, recipientAddr, detailAddress, productName, status, deliveryCompletedAt, pickupScheduledDate, size FROM Parcel WHERE ownerId = ? AND DATE_FORMAT(pickupScheduledDate, '%Y-%m') = ?",
         [userId, time]
     );
 
