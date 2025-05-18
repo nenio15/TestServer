@@ -81,7 +81,7 @@ export const getShipmentDetailView = async (req) => {
 
 // 단건 배송 화면
 export const postShipment = async (req) => {
-  const { productName, recipientName, recipientPhone, recipientAddr, detailAddress, size, caution, pickupDate } = req.body;
+  const { productName, recipientName, recipientPhone, recipientAddr, detailAddress, size, caution, pickupScheduledDate } = req.body;
 
   if (!productName || !recipientName || !recipientPhone || !recipientAddr || !detailAddress || !size) {
     throw new Error('필수 항목 누락');
@@ -93,8 +93,8 @@ export const postShipment = async (req) => {
     //trackingcode 송장번호 고유 기입 - 수거시 생성
     //parcel 단건 배송정보 입력
     const [result] = await pool.query(
-        'INSERT INTO Parcel ( ownerid, productName, size, caution, recipientname, recipientPhone, recipientAddr, detailAddress, pickupDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [userId, productName, size, caution, recipientName, recipientPhone, recipientAddr, detailAddress, pickupDate]
+        'INSERT INTO Parcel ( ownerid, productName, size, caution, recipientname, recipientPhone, recipientAddr, detailAddress, pickupScheduledDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [userId, productName, size, caution, recipientName, recipientPhone, recipientAddr, detailAddress, pickupScheduledDate]
     );
 
     //포인트 양식
