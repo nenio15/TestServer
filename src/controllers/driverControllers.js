@@ -1,6 +1,6 @@
 import { getDriverHome } from "../services/driver/driverHomeService.js";
-import { getPickUpInfo, updatePickUpInfo } from "../services/driver/driverPickupService.js";
-import { getDeliveryInfo, updateDeliveryInfo } from "../services/driver/driverDeliveryService.js";
+import { getDriverPickupList, completeDriverPickup } from "../services/driver/driverPickupService.js";
+import { getDriverDeliveryList, completeDriverDelivery } from "../services/driver/driverDeliveryService.js";
 import { getRoute, requestRoute } from "../services/driver/driverRouteService.js";
 
 // 홈 화면
@@ -10,14 +10,19 @@ export const getHomeInfo = async (req, res, next) => {
     res.status(200).json({ status: true, data });
   } catch (err) {
     console.error(err);
+
+    if (err.message === "등록된 기사 정보가 없습니다.") {
+      return res.status(404).json({ status: false, message: err.message });
+    }
+
     res.status(500).json({ status: false, message: "서버 오류 발생" });
   }
 };
 
 // 수거 화면
-export const getPickUpList = async (req, res, next) => {
+export const getPickupList = async (req, res, next) => {
   try {
-    const data = await getPickUpInfo(req);
+    const data = await getDriverPickupList(req);
     res.status(200).json({ status: true, data });
   } catch (err) {
     console.error(err);
@@ -25,21 +30,23 @@ export const getPickUpList = async (req, res, next) => {
   }
 };
 
-export const patchPickUp = async (req, res, next) => {
+export const completePickup = async (req, res, next) => {
   try {
-    const { storeId } = req.params;
-    const data = await updatePickUpInfo(req, storeId);
+    const data = await completeDriverPickup(req);
     res.status(200).json({ status: true, data });
   } catch (err) {
     console.error(err);
-    res.status(err.status || 500).json({ status: false, message: err.message || "서버 오류 발생" });
+    res.status(err.status || 500).json({
+      status: false,
+      message: err.message || "서버 오류 발생",
+    });
   }
 };
 
 // 배송 화면
 export const getDeliveryList = async (req, res, next) => {
   try {
-    const data = await getDeliveryInfo(req);
+    const data = await getDriverDeliveryList(req);
     res.status(200).json({ status: true, data });
   } catch (err) {
     console.error(err);
@@ -47,14 +54,16 @@ export const getDeliveryList = async (req, res, next) => {
   }
 };
 
-export const patchDelivery = async (req, res, next) => {
+export const completeDelivery = async (req, res, next) => {
   try {
-    const { trackingCode } = req.params;
-    const data = await updateDeliveryInfo(req, trackingCode);
+    const data = await completeDriverDelivery(req);
     res.status(200).json({ status: true, data });
   } catch (err) {
     console.error(err);
-    res.status(err.status || 500).json({ status: false, message: err.message || "서버 오류 발생" });
+    res.status(err.status || 500).json({
+      status: false,
+      message: err.message || "서버 오류 발생",
+    });
   }
 };
 
