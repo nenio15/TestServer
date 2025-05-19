@@ -46,7 +46,7 @@ export const getShipmentCompleteView = async (req) => {
 
     //날짜기준 배송리스트 조회 ( 월간 확인 )
     const [result] = await pool.query(
-        "SELECT trackingCode, recipientName, recipientAddr, productName, status, completedAt FROM Parcel WHERE ownerId = ? AND DATE_FORMAT(completedAt, '%Y-%m') = ?",
+        "SELECT trackingCode, recipientName, recipientAddr, productName, status, completedAt FROM Parcel WHERE ownerId = ? AND DATE_FORMAT(pickupScheduledDate, '%Y-%m') = ?",
         [userId, time]
     );
 
