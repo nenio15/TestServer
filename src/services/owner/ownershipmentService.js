@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { pool } from '../../config/db.js';
 import {s2point} from "../../config/sizeToPoint.js";
+import {pad} from "../../config/pad.js";
 
 // get 배송 전체 내역
 export const getShipmentListView = async (req) => {
@@ -14,7 +15,7 @@ export const getShipmentListView = async (req) => {
     const userId = req.userId;
 
     //ex)2025-04-21  day까지만 확인
-    const time = year + '-' + month + '-' + day;
+    const time = year + '-' + pad(month) + '-' + pad(day);
 
     //날짜기준 배송리스트 조회
     const [result] = await pool.query(
@@ -42,7 +43,7 @@ export const getShipmentCompleteView = async (req) => {
     const userId = req.userId;
 
     //ex)2025-04-00  month까지 확인
-    const time = year + '-' + month;// + '-' + day;
+    const time = year + '-' + pad(month);// + '-' + day;
 
     //날짜기준 배송리스트 조회 ( 월간 확인 )
     const [result] = await pool.query(
