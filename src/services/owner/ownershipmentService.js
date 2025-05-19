@@ -18,7 +18,7 @@ export const getShipmentListView = async (req) => {
 
     //날짜기준 배송리스트 조회
     const [result] = await pool.query(
-        'SELECT trackingCode, status FROM Parcel WHERE ownerId = ? AND DATE(createdAt) = ? AND isDeleted = false',
+        'SELECT trackingCode, recipientName, recipientAddr, detailAddress, productName, status, deliveryCompletedAt, pickupScheduledDate, size FROM Parcel WHERE ownerId = ? AND DATE(pickupScheduledDate) = ?',
         [userId, time]
     );
 
